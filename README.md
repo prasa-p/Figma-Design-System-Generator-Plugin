@@ -1,82 +1,131 @@
-# Figma Design System Plugin
+# Auto Design System - Figma Plugin
 
-A powerful Figma plugin that streamlines design system management by extracting, organizing, and synchronizing design tokens, components, and styles across your design workflow.
+A Figma plugin that automatically scans your current page and generates a comprehensive design system with all unique colors, text styles, and components.
 
 ## ✨ Features
 
-- **Design Token Extraction**: Automatically extract colors, typography, spacing, and other design tokens from your Figma files
-- **Component Organization**: Organize and categorize design system components with consistent naming conventions
-- **Style Guide Generation**: Generate comprehensive style guides and documentation
-- **Cross-File Synchronization**: Keep design tokens consistent across multiple Figma files
-- **Export Capabilities**: Export design tokens in multiple formats (JSON, CSS, SCSS, etc.)
-- **Team Collaboration**: Share and maintain design systems across teams
+- **Color Extraction**: Automatically finds and displays all unique colors used in your design with usage counts
+- **Typography Analysis**: Identifies all unique text styles (font family, weight, size) with sample text
+- **Component Library**: Collects all unique components in one organized view
+- **Smart Filtering**: Automatically skips locked and hidden layers
+- **Easy Copy**: Select and copy any part of the generated design system to paste elsewhere
+- **Beautiful Layout**: Clean, organized design system page with proper spacing and grouping
 
-## 🚀 Installation
+## 📦 Installation
 
-1. Open Figma
-2. Go to **Plugins** > **Browse plugins in Community**
-3. Search for "Design System Plugin"
-4. Click **Install**
+1. **Open Figma Desktop App** (plugins don't work in browser for development)
 
-Or install directly from the [Figma Community](https://figma.com/community)
+2. **Create a new plugin**:
+   - Go to `Plugins` → `Development` → `New Plugin...`
+   - Choose "Import plugin from manifest"
+   - Select the `manifest.json` file from this folder
 
-## 📖 How to Use
+3. **All set!** Your plugin is now ready to use
 
-### Getting Started
-1. Open your Figma file
-2. Go to **Plugins** > **Design System Plugin**
-3. Select the components or frames you want to process
-4. Choose your desired action from the plugin panel
+## 🚀 Usage
 
-### Extracting Design Tokens
-1. Select elements with the styles you want to extract
-2. Click **Extract Tokens** in the plugin panel
-3. Review and organize the extracted tokens
-4. Export in your preferred format
+1. **Open a Figma file** with the page you want to scan
 
-### Organizing Components
-1. Select your component library or frames
-2. Use the **Organize Components** feature
-3. Apply consistent naming and categorization
-4. Generate documentation automatically
+2. **Run the plugin**:
+   - Go to `Plugins` → `Development` → `Auto Design System`
 
-## 🛠 Configuration
+3. **Click "Generate Design System"**:
+   - The plugin will scan your current page
+   - A new page called "Auto Design System" will be created
+   - All unique colors, text styles, and components will be organized there
 
-The plugin supports various configuration options:
+4. **Copy what you need**:
+   - Click "Select for Copy" to select the entire design system
+   - Or manually select individual sections/items
+   - Press `Cmd/Ctrl+C` to copy
+   - Paste anywhere in your Figma file
 
-- **Token Naming**: Customize how design tokens are named
-- **Export Formats**: Choose from JSON, CSS, SCSS, JavaScript
-- **Organization Rules**: Set up automatic component categorization
-- **Sync Settings**: Configure cross-file synchronization preferences
+## 📋 What Gets Scanned
 
-## 📋 Requirements
+### Colors
+- All solid fill colors from shapes, frames, and text
+- Shows hex code and usage count
+- Sorted by frequency of use
+- Displays color swatches with labels
 
-- Figma Desktop App or Browser version
-- Edit access to the Figma file
-- Internet connection for syncing features
+### Text Styles
+- Font family, weight, and size combinations
+- Line height and letter spacing info
+- Sample text from your design
+- Usage count for each style
+- Sorted by font size (largest to smallest)
 
-## 🤝 Contributing
+### Components
+- All master components on the page
+- Creates instances for preview
+- Component names included
+- Easy to identify and copy
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+## 🎯 Best Practices
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. **Clean up your page first**: Hide or lock any experimental layers you don't want included
 
-## 🐛 Bug Reports & Feature Requests
+2. **Use meaningful names**: Component names will be preserved in the design system
 
-Found a bug or have an idea for a new feature? 
+3. **Regenerate as needed**: You can run the plugin multiple times as your design evolves
 
-- **Bug Reports**: [Create an issue](../../issues/new?template=bug_report.md)
-- **Feature Requests**: [Create an issue](../../issues/new?template=feature_request.md)
+4. **Copy selectively**: Use the "Select for Copy" button or manually select specific sections
 
-## 🙏 Acknowledgments
+## 🔧 Technical Details
 
-- Thanks to the Figma team for the excellent plugin API
-- Inspired by design systems from Material Design, Ant Design, and others
+- Built with Figma Plugin API
+- No external dependencies
+- Uses Inter font for labels (fallback included)
+- Supports all Figma color and text properties
+- Auto-layout for flexible sizing
+
+## 💡 Tips
+
+- **Large files**: The plugin may take a few seconds for complex pages with many elements
+- **Font loading**: If a custom font fails to load, it will be skipped automatically
+- **Duplicates**: The plugin automatically removes duplicate colors, text styles, and components
+- **Updates**: Re-run the plugin to update the design system after making changes
+
+## 📝 File Structure
+
+```
+auto-design-system/
+├── manifest.json    # Plugin configuration
+├── code.js          # Main plugin logic
+└── ui.html          # Plugin UI
+```
+
+## 🐛 Troubleshooting
+
+**Plugin doesn't show up?**
+- Make sure you're using Figma Desktop App
+- Check that manifest.json is properly formatted
+- Try restarting Figma
+
+**Some fonts don't appear?**
+- The plugin uses fonts that are loaded in Figma
+- If a font isn't installed, it will be skipped
+- Inter font is used as fallback
+
+**Design system looks empty?**
+- Make sure you have visible, unlocked elements on your page
+- Check that elements have fills and text content
+- Verify you're on the correct page before running
+
+## 🎨 Example Output
+
+The generated design system includes:
+
+1. **Colors Section**: Grid of color swatches with hex codes and usage counts
+2. **Typography Section**: List of text styles with samples and specifications  
+3. **Components Section**: Gallery of all components with instances
+
+All sections are properly spaced with headers and organized in auto-layout frames for easy manipulation.
+
+## 📄 License
+
+Free to use and modify for your projects!
 
 ---
 
-**Made with ❤️ for the design community**
+Built for designers who want to quickly document their design systems 🚀

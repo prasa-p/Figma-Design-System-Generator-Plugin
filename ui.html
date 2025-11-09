@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #ffffff;
+    }
+    
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      color: #000;
+    }
+    
+    .subtitle {
+      font-size: 11px;
+      color: #999;
+      margin: 0 0 20px 0;
+    }
+    
+    p {
+      font-size: 13px;
+      color: #666;
+      margin: 0 0 20px 0;
+      line-height: 1.5;
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px 16px;
+      background: #0066FF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    button:hover {
+      background: #0052CC;
+      transform: translateY(-1px);
+    }
+    
+    button:active {
+      background: #0047B3;
+      transform: translateY(0);
+    }
+    
+    button:disabled {
+      background: #E0E0E0;
+      color: #999;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    button.secondary {
+      background: #F0F0F0;
+      color: #333;
+    }
+    
+    button.secondary:hover {
+      background: #E0E0E0;
+    }
+    
+    button.secondary:disabled {
+      background: #F5F5F5;
+      color: #CCC;
+    }
+    
+    .info {
+      background: #F8F9FA;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #666;
+      margin-top: 16px;
+      border-left: 3px solid #E0E0E0;
+    }
+    
+    .stats {
+      background: #E8F5E9;
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #2E7D32;
+      margin-bottom: 12px;
+      display: none;
+      border-left: 3px solid #4CAF50;
+    }
+    
+    .stats.show {
+      display: block;
+      animation: slideIn 0.3s ease;
+    }
+    
+    .stats-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    
+    .stats-items {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+    }
+    
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .stat-label {
+      opacity: 0.8;
+    }
+    
+    .stat-value {
+      font-weight: 600;
+    }
+    
+    .icon {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Auto Design System</h2>
+  <p class="subtitle">Generated from your Figma page</p>
+  
+  <p>Scans the current page and creates a comprehensive design system with all unique colors, text styles, and components.</p>
+  
+  <button id="generate">
+    <svg class="icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 2V14M2 8H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    Generate Design System
+  </button>
+  
+  <div id="stats" class="stats">
+    <div class="stats-title">✨ Generated Successfully</div>
+    <div class="stats-items">
+      <div class="stat-item">
+        <span class="stat-label">Colors:</span>
+        <span class="stat-value" id="colorCount">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Text Styles:</span>
+        <span class="stat-value" id="textStyleCount">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Components:</span>
+        <span class="stat-value" id="componentCount">0</span>
+      </div>
+    </div>
+  </div>
+  
+  <button id="copy" class="secondary" disabled>
+    <svg class="icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="5" y="5" width="9" height="9" rx="1" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M3 10V3C3 2.44772 3.44772 2 4 2H10" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    Select for Copy
+  </button>
+  
+  <div class="info">
+    💡 <strong>Tip:</strong> Locked and hidden layers are automatically skipped during scanning.
+  </div>
+  
+  <script>
+    const generateBtn = document.getElementById('generate');
+    const copyBtn = document.getElementById('copy');
+    const statsDiv = document.getElementById('stats');
+    const colorCount = document.getElementById('colorCount');
+    const textStyleCount = document.getElementById('textStyleCount');
+    const componentCount = document.getElementById('componentCount');
+    
+    generateBtn.onclick = () => {
+      generateBtn.disabled = true;
+      generateBtn.innerHTML = `
+        <div class="spinner"></div>
+        Generating...
+      `;
+      statsDiv.classList.remove('show');
+      parent.postMessage({ pluginMessage: { type: 'generate-design-system' } }, '*');
+    };
+    
+    copyBtn.onclick = () => {
+      parent.postMessage({ pluginMessage: { type: 'copy-design-system' } }, '*');
+    };
+    
+    window.onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+      
+      if (msg.type === 'generation-complete') {
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = `
+          <svg class="icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 2V14M2 8H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Generate Design System
+        `;
+        copyBtn.disabled = false;
+        
+        colorCount.textContent = msg.stats.colors;
+        textStyleCount.textContent = msg.stats.textStyles;
+        componentCount.textContent = msg.stats.components;
+        
+        statsDiv.classList.add('show');
+      }
+    };
+  </script>
+</body>
+</html>
